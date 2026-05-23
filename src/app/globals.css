@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --void: #03030a;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  background: var(--void);
+  color: #e7ebff;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection { background: rgba(168, 85, 247, 0.35); color: #fff; }
+
+/* ---- scrollbar ---- */
+::-webkit-scrollbar { width: 9px; }
+::-webkit-scrollbar-track { background: #03030a; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#a855f7, #38bdf8);
+  border-radius: 9px;
+}
+
+@layer components {
+  /* film-grain + vignette over everything */
+  .noise::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 60;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono), monospace;
+    font-size: 11px;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: #8b93b8;
+  }
+
+  .glass {
+    background: linear-gradient(180deg, rgba(20, 24, 56, 0.5), rgba(8, 10, 28, 0.42));
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(168, 176, 224, 0.12);
+  }
+
+  .halo {
+    box-shadow: 0 0 0 1px rgba(168, 176, 224, 0.06),
+                0 30px 80px -40px rgba(56, 189, 248, 0.35);
+  }
+
+  .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(168,176,224,0.4), transparent); }
+
+  .border-rule { border-color: rgba(168, 176, 224, 0.14); }
+
+  /* gradient text systems */
+  .text-cosmic-grad {
+    background: linear-gradient(120deg, #f4f7ff 0%, #a855f7 42%, #38bdf8 78%, #f4f7ff 100%);
+    background-size: 220% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer 14s linear infinite;
+  }
+  .text-ember-grad {
+    background: linear-gradient(110deg, #ff4d6d, #e8c372 60%, #ff8a5b);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-gold-grad {
+    background: linear-gradient(110deg, #f4f7ff, #e8c372 50%, #b98a2e);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* liquid-metal monumental title */
+  .liquid-metal {
+    background: linear-gradient(
+      180deg,
+      #ffffff 0%, #cfd6ff 18%, #8b93b8 38%,
+      #f4f7ff 52%, #a855f7 66%, #38bdf8 82%, #e8c372 100%
+    );
+    background-size: 100% 280%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 4px 40px rgba(120, 90, 255, 0.5));
+    animation: metalflow 12s ease-in-out infinite;
+  }
+  @keyframes metalflow {
+    0%, 100% { background-position: 50% 0%; }
+    50% { background-position: 50% 100%; }
+  }
+
+  .bignum {
+    font-family: var(--font-mono), monospace;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.03em;
+  }
+
+  .glow-purple { text-shadow: 0 0 18px rgba(168, 85, 247, 0.7); }
+  .glow-blue { text-shadow: 0 0 18px rgba(56, 189, 248, 0.7); }
+  .glow-ember { text-shadow: 0 0 18px rgba(255, 77, 109, 0.7); }
+
+  .equation {
+    font-family: var(--font-mono), monospace;
+    color: #e7ebff;
+    text-shadow: 0 0 22px rgba(120, 130, 255, 0.55);
+  }
+
+  .hairline-top { border-top: 1px solid rgba(168, 176, 224, 0.14); }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .perspective { perspective: 1200px; }
+}
+
+/* respect reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; }
+  html { scroll-behavior: auto; }
+}
